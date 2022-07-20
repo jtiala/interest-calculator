@@ -18,6 +18,7 @@ import InterestCalculator from "./components/InterestCalculator.vue";
 #app {
   display: flex;
   flex-direction: column;
+  gap: 2em;
   max-width: 480px;
   margin: 0 auto;
   padding: 0 2rem;

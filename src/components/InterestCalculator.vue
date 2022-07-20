@@ -19,46 +19,60 @@ const monthlyInterest = computed(
 </script>
 
 <template>
-  <fieldset>
-    <legend>Loan details</legend>
-    <label>
-      <span>Loan amount (€)</span>
-      <input type="number" v-model.number="loanAmount" />
-    </label>
-    <label>
-      <span>Interest reference rate (%)</span>
-      <input type="number" v-model.number="interestReferenceRate" />
-    </label>
-    <label>
-      <span>Interest margin (%)</span>
-      <input type="number" v-model.number="interestMargin" />
-    </label>
-    <label>
-      <span>Interest rate</span>
-      <span>{{ interestRate }} %</span>
-    </label>
-    <label>
-      <span>Yearly interest</span>
-      <span>{{ yearlyInterest }} €</span>
-    </label>
-    <label>
-      <span>Monthly interest</span>
-      <span>{{ monthlyInterest }} €</span>
-    </label>
-  </fieldset>
+  <div class="root">
+    <fieldset>
+      <legend>Loan details</legend>
+      <label>
+        <span>Loan amount (€)</span>
+        <input type="number" v-model.number="loanAmount" />
+      </label>
+      <label>
+        <span>Interest reference rate (%)</span>
+        <input type="number" v-model.number="interestReferenceRate" />
+      </label>
+      <label>
+        <span>Interest margin (%)</span>
+        <input type="number" v-model.number="interestMargin" />
+      </label>
+    </fieldset>
+    <table>
+      <tbody>
+        <tr>
+          <th>Interest rate</th>
+          <td>{{ interestRate }} %</td>
+        </tr>
+        <tr>
+          <th>Yearly interest</th>
+          <td>{{ yearlyInterest }} €</td>
+        </tr>
+        <tr>
+          <th>Monthly interest</th>
+          <td>{{ monthlyInterest }} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style scoped>
-fieldset {
+.root {
   display: flex;
   flex-direction: column;
-}
-legend {
-  align-self: flex-start;
+  gap: 2em;
 }
 label {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1em;
+}
+tr:nth-child(odd) {
+  background-color: seashell;
+}
+th {
+  padding: 0.5em;
+  text-align: left;
+}
+td {
+  padding: 0.5em;
 }
 </style>

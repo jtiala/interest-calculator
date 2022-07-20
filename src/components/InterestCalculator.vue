@@ -1,87 +1,49 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const loanAmount = ref(0);
+const loanAmount = ref(500000);
 const interestReferenceRate = ref(0);
-const interestMargin = ref(0);
-const interestRate = ref(0);
-const yearlyInterest = ref(0);
-const monthlyInterest = ref(0);
+const interestMargin = ref(0.5);
 
-const setLoanAmount = (e: Event) => {
-  loanAmount.value = parseFloat((e.target as HTMLInputElement).value);
-  calculateInterestRate();
-  calculateYearlyInterest();
-  calculateMonthlyInterest();
-};
-
-const setInterestReferenceRate = (e: Event) => {
-  interestReferenceRate.value = parseFloat(
-    (e.target as HTMLInputElement).value
-  );
-  calculateInterestRate();
-  calculateYearlyInterest();
-  calculateMonthlyInterest();
-};
-
-const setInterestMargin = (e: Event) => {
-  interestMargin.value = parseFloat((e.target as HTMLInputElement).value);
-  calculateInterestRate();
-  calculateYearlyInterest();
-  calculateMonthlyInterest();
-};
-
-const calculateInterestRate = () => {
-  interestRate.value =
+const interestRate = computed(
+  () =>
     Math.round((interestReferenceRate.value + interestMargin.value) * 1000) /
-    1000;
-};
-
-const calculateYearlyInterest = () => {
-  yearlyInterest.value =
-    Math.round((loanAmount.value + interestRate.value) * 100) / 100;
-};
-
-const calculateMonthlyInterest = () => {
-  monthlyInterest.value =
-    Math.round(((loanAmount.value + interestRate.value) / 12) * 100) / 100;
-};
+    1000
+);
+const yearlyInterest = computed(
+  () => Math.round(loanAmount.value * (interestRate.value / 100) * 100) / 100
+);
+const monthlyInterest = computed(
+  () => Math.round((yearlyInterest.value / 12) * 100) / 100
+);
 </script>
 
 <template>
   <fieldset>
     <legend>Loan details</legend>
     <label>
-      <span>Loan amount</span>
-      <input type="number" :value="loanAmount" @change="setLoanAmount" />
+      <span>Loan amount (€)</span>
+      <input type="number" v-model.number="loanAmount" />
     </label>
     <label>
-      <span>Interest reference rate</span>
-      <input
-        type="number"
-        :value="interestReferenceRate"
-        @change="setInterestReferenceRate"
-      />
+      <span>Interest reference rate (%)</span>
+      <input type="number" v-model.number="interestReferenceRate" />
     </label>
     <label>
-      <span>Interest margin</span>
-      <input
-        type="number"
-        :value="interestMargin"
-        @change="setInterestMargin"
-      />
+      <span>Interest margin (%)</span>
+      <input type="number" v-model.number="interestMargin" />
     </label>
     <label>
       <span>Interest rate</span>
-      <input type="text" :value="interestRate" readonly />
+      <span>{{ interestRate }} %</span>
     </label>
     <label>
       <span>Yearly interest</span>
-      <input type="text" :value="yearlyInterest" readonly />
+      <span>{{ yearlyInterest }} €</span>
     </label>
     <label>
       <span>Monthly interest</span>
-      <input type="text" :value="monthlyInterest" readonly />
+      <span>{{ monthlyInterest }} €</span>
     </label>
   </fieldset>
 </template>

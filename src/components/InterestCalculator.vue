@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import NumberInput from "./NumberInput.vue";
 
 const loanAmount = ref(500000);
 const interestReferenceRate = ref(0);
@@ -22,18 +23,12 @@ const monthlyInterest = computed(
   <div class="root">
     <fieldset>
       <legend>Loan details</legend>
-      <label>
-        <span>Loan amount (€)</span>
-        <input type="number" v-model.number="loanAmount" />
-      </label>
-      <label>
-        <span>Interest reference rate (%)</span>
-        <input type="number" v-model.number="interestReferenceRate" />
-      </label>
-      <label>
-        <span>Interest margin (%)</span>
-        <input type="number" v-model.number="interestMargin" />
-      </label>
+      <NumberInput label="Loan amount (€)" v-model="loanAmount" />
+      <NumberInput
+        label="Interest reference rate (%)"
+        v-model="interestReferenceRate"
+      />
+      <NumberInput label="Interest margin (%)" v-model="interestMargin" />
     </fieldset>
     <table>
       <tbody>
@@ -60,11 +55,6 @@ const monthlyInterest = computed(
   flex-direction: column;
   gap: 2em;
 }
-label {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1em;
-}
 tr:nth-child(odd) {
   background-color: seashell;
 }
@@ -74,5 +64,8 @@ th {
 }
 td {
   padding: 0.5em;
+  font-size: 1.1em;
+  font-weight: 600;
+  text-align: right;
 }
 </style>

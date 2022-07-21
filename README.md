@@ -1,6 +1,6 @@
 # interest-calculator
 
-Super simple interest calculator.
+Super simple interest calculator made as a Vue exercise.
 
 ## Project Setup
 

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import InterestCalculator from "./components/InterestCalculator.vue";
+import { ref } from "vue";
+import InputGroup from "./components/InputGroup.vue";
+import CalculationsTable from "./components/CalculationsTable.vue";
+import NumberInput from "./components/NumberInput.vue";
+
+const loanAmount = ref(500000);
+const interestMargin = ref(0.5);
 </script>
 
 <template>
@@ -8,7 +14,14 @@ import InterestCalculator from "./components/InterestCalculator.vue";
   </header>
 
   <main>
-    <InterestCalculator />
+    <InputGroup legend="Loan details">
+      <NumberInput label="Loan amount (€)" v-model="loanAmount" />
+      <NumberInput label="Interest margin (%)" v-model="interestMargin" />
+    </InputGroup>
+    <CalculationsTable
+      :loanAmount="loanAmount"
+      :interestMargin="interestMargin"
+    />
   </main>
 </template>
 
@@ -23,5 +36,10 @@ import InterestCalculator from "./components/InterestCalculator.vue";
   margin: 0 auto;
   padding: 0 2rem;
   font-weight: normal;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
 }
 </style>

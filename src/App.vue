@@ -3,9 +3,12 @@ import { ref } from "vue";
 import InputGroup from "./components/InputGroup.vue";
 import CalculationsTable from "./components/CalculationsTable.vue";
 import NumberInput from "./components/NumberInput.vue";
+import SubmitButton from "./components/SubmitButton.vue";
+import { getNumberParam } from "./utils/searchParams";
 
-const loanAmount = ref(500000);
-const interestMargin = ref(0.5);
+const searchParams = ref(new URLSearchParams(window.location.search));
+const loanAmount = ref(getNumberParam(searchParams.value, "amount") || 500000);
+const interestMargin = ref(getNumberParam(searchParams.value, "margin") || 0.5);
 </script>
 
 <template>

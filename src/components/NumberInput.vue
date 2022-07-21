@@ -19,6 +19,7 @@ function updateValue(event: Event) {
     <span>{{ label }}</span>
     <input
       type="number"
+      step="any"
       :name="name"
       :value="modelValue"
       @input="updateValue"

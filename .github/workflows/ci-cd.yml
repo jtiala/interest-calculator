@@ -24,6 +24,8 @@ jobs:
           CI: true
         run: npm run test:unit
       - name: Build
+        env:
+          BASE: /interest-calculator/
         run: npm run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

@@ -17,4 +17,7 @@ fieldset {
   flex-direction: column;
   gap: 1em;
 }
+legend {
+  align-self: flex-start;
+}
 </style>

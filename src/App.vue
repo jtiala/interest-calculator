@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import InputGroup from "./components/InputGroup.vue";
 import CalculationsTable from "./components/CalculationsTable.vue";
 import NumberInput from "./components/NumberInput.vue";
-import SubmitButton from "./components/SubmitButton.vue";
 import { getNumberParam } from "./utils/searchParams";
 
 const searchParams = ref(new URLSearchParams(window.location.search));
 const loanAmount = ref(getNumberParam(searchParams.value, "amount") || 500000);
 const interestMargin = ref(getNumberParam(searchParams.value, "margin") || 0.5);
+
+watch([loanAmount, interestMargin], () => {
+  const url = new URL(window.location.href);
+
+  url.search = new URLSearchParams({
+    amount: loanAmount.value.toString(),
+    margin: interestMargin.value.toString(),
+  }).toString();
+
+  window.history.replaceState(undefined, "", url);
+});
 </script>
 
 <template>
@@ -17,10 +27,20 @@ const interestMargin = ref(getNumberParam(searchParams.value, "margin") || 0.5);
   </header>
 
   <main>
-    <InputGroup legend="Loan details">
-      <NumberInput label="Loan amount (€)" v-model="loanAmount" />
-      <NumberInput label="Interest margin (%)" v-model="interestMargin" />
-    </InputGroup>
+    <form method="GET" @submit.prevent>
+      <InputGroup legend="Loan details">
+        <NumberInput
+          label="Loan amount (€)"
+          name="amount"
+          v-model="loanAmount"
+        />
+        <NumberInput
+          label="Interest margin (%)"
+          name="margin"
+          v-model="interestMargin"
+        />
+      </InputGroup>
+    </form>
     <CalculationsTable
       :loanAmount="loanAmount"
       :interestMargin="interestMargin"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   label: string;
+  name: string;
   modelValue: number;
 }>();
 
@@ -16,7 +17,12 @@ function updateValue(event: Event) {
 <template>
   <label>
     <span>{{ label }}</span>
-    <input type="number" :value="modelValue" @input="updateValue" />
+    <input
+      type="number"
+      :name="name"
+      :value="modelValue"
+      @input="updateValue"
+    />
   </label>
 </template>
 
